@@ -3,7 +3,7 @@ import { Parallax } from 'react-parallax'
 import Button from '../components/Button'
 import { useState } from 'react';
 import calculateBmi from '../hooks/calculateBmiHook';
-
+import { useDispatch } from "react-redux"
 
 
 function UserDetails() {
@@ -17,6 +17,7 @@ function UserDetails() {
 	const [loading, setLoading] = useState(false);
 	const [bmi, setBmi] = useState(null);
 	const [description, setDescription] = useState("");
+	const dispatch = useDispatch();
 
 	const handleChange = (event) => {
 		event.preventDefault();
@@ -59,14 +60,24 @@ function UserDetails() {
 		let ht = null;
 		let wt = null;
 
+		if(!gender){
+            alert("Select Gender!!!")
+			setLoading(false)
+			return
+        }
+
 		if(heightMeasurementType === "Feet"){
 			if(!heightInFeet || !heightInInch){
 				alert("Enter Height Feild!!!")
+				setLoading(false)
+				return
 			}
 			ht = heightInFeet + "." + heightInInch + " foot";
 		} else{
 			if(!heightInCms){
 				alert("Enter Height Feild!!!")
+				setLoading(false)
+				return
 			}
 			ht = heightInCms + " cm"
 		}
@@ -83,9 +94,19 @@ function UserDetails() {
 
 		let data = await calculateBmi({ht, wt, gender})
 		let Data = data.split("\n");
+		scrollBy({
+			top: 300,
+            behavior: "smooth"
+		})
 		setBmi(Data[0]);
 		setDescription(Data[2])
 		setLoading(false);
+	}
+
+	const updateUserData = (e) => {
+		e.preventDefault();
+
+		
 	}
 
 	return (
@@ -101,9 +122,9 @@ function UserDetails() {
 			</Parallax>
 
 
-			<div className='w-full flex justify-between bg-gradient-to-br from-slate-900 from-30% to-black h-[450px]'>
-				<div className='flex flex-col w-1/3 space-y-10 ml-40'>
-					<div className='h-auto w-auto pt-20 space-x-5'>
+			<div className='w-full flex justify-between bg-gradient-to-br from-slate-900 from-30% to-black h-[600px]'>
+				<div className='flex flex-col w-1/3 space-y-10 ml-40 py-20'>
+					<div className='h-auto w-auto space-x-5'>
 
 						<Button id="gender" name="Male" icon="fi fi-br-male" handleChange={handleChange} info={gender} className="px-4 py-2 text-xl font-medium" />
 
@@ -119,9 +140,9 @@ function UserDetails() {
 								heightMeasurementType === "Feet" ?
 								<div className='space-x-4'>
 									<input type="number" name="feet" className='bg-transparent border-b border-white w-10 h-9 focus:outline-none text-center text-2xl' value={heightInFeet} onChange={handleHeightChange}  />
-									<span className='relative right-5 bottom-2'>"</span>
+									<span className='relative right-5 bottom-2 text-xl'>"</span>
 									<input type="number" name="inch" className='bg-transparent border-b border-white w-10 h-9 focus:outline-none text-center text-2xl' value={heightInInch} onChange={handleHeightChange} />
-									<span className='relative right-5 bottom-2'>'</span>
+									<span className='relative right-5 bottom-2 text-xl'>'</span>
 								</div> :
 								<input type="text" className='bg-transparent border-b border-white w-12 h-9 focus:outline-none text-center text-2xl' value={heightInCms} onChange={handleHeightChange} />
 							}
@@ -147,11 +168,16 @@ function UserDetails() {
 				</div>
 				{
 					bmi && (
-						<div className="flex flex-col justify-center items-center w-1/2 fade-right">
+						<div className="flex flex-col justify-center items-center w-1/2 fade-right py-20">
 							<h2 className='text-4xl'>Your BMI Score<br /> <span className='text-8xl font-semibold text-orange-400'>{bmi}</span></h2>
-							<div className='flex items-center h-40'>
+							<div className='flex items-center h-40 mb-10'>
 								<span className='text-[150px] font-thin text-blue-400'>{"{"}</span>
 								<p className='text-xl pt-7'>According to your BMI score,<br /> you are <br /><span className='font-bold text-4xl text-orange-400'>{description}</span></p>
+							</div>
+							<button onClick={updateUserData} className='bg-gradient-to-r from-blue-400 to-blue-600 rounded px-3 py-2 text-white'>Your BMI Explaination</button>
+							<div className="flex justify-between mt-5 gap-5">
+								<button onClick={updateUserData} className='bg-gradient-to-r from-pink-400 to-pink-700 rounded px-3 py-2 text-white'>Get Diet Recommendation</button>
+								<button onClick={updateUserData} className='bg-gradient-to-r from-yellow-400 to-orange-700 rounded px-3 py-2'>Get Exercise Recommendation</button>
 							</div>
 						</div>
 					)
