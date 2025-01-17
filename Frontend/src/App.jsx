@@ -6,6 +6,7 @@ import UserDetails from "./pages/UserDetails"
 import ImageRecommendation from "./pages/ImageRecommendation"
 import AuthLayout from "./pages/AuthLayout"
 import Login from "./pages/Login"
+import Details from "./pages/Details"
 
 
 function App() {
@@ -15,12 +16,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="userdetails" element={<UserDetails />} />
           <Route path="imageRecomendation" element={<ImageRecommendation />} />
+          <Route path="details" element={<Details />} />
         </Route>
-        <Route>
-          <Route path="/auth" element={<AuthLayout />} >
-            <Route path="signup" element={<Signup />} />
-            <Route path="login" element={<Login />} />
-          </Route>
+        <Route path="/auth" element={<AuthLayout />} >
+          <Route path="signup" element={<Signup />} />
+          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
   )
