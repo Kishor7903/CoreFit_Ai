@@ -123,7 +123,7 @@ function UserDetails() {
 			</Parallax>
 
 
-			<div className='w-full flex justify-between bg-gradient-to-br from-slate-900 from-30% to-black h-[600px]'>
+			<div className='w-full flex justify-between bg-gradient-to-r from-[#060618] to-[#003c89] h-[600px]'>
 				<div className='flex flex-col w-1/3 space-y-10 ml-40 py-20'>
 					<div className='h-auto w-auto space-x-5'>
 
@@ -134,7 +134,7 @@ function UserDetails() {
 						<Button id="gender" name="Other" icon="fi fi-rs-transgender" handleChange={handleChange} info={gender} className="px-4 py-2 text-xl font-medium" />
 
 					</div>
-					<div className='flex justify-between bg-[rgba(96,99,255,0.13)] rounded-lg p-3'>
+					<div className='flex justify-between bg-[rgba(96,99,255,0.23)] rounded-lg p-3'>
 						<h2 className='text-2xl'>Height</h2>
 						<div className="flex items-end space-x-8 text-slate-300 ">
 							{
@@ -154,7 +154,7 @@ function UserDetails() {
 							</div>
 						</div>
 					</div>
-					<div className='flex justify-between bg-[rgba(96,99,255,0.13)] rounded-lg p-3 '>
+					<div className='flex justify-between bg-[rgba(96,99,255,0.23)] rounded-lg p-3 '>
 						<h2 className='text-2xl'>Weight</h2>
 						<div className="flex items-end space-x-8 text-slate-300 ">
 							<input type="number" className='bg-transparent border-b border-white w-12 h-9 focus:outline-none text-center text-2xl' value={weight} onChange={handleWeightChange} />

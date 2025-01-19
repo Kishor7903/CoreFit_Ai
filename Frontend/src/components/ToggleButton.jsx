@@ -12,7 +12,7 @@ const ToggleButton = ({isToggled, setIsToggled}) => {
         }`}
       >
         <span
-          className={`absolute top-[6px] left-2 w-[85px] h-12 bg-white rounded shadow-md transform transition-transform duration-300 z-10 ${
+          className={`absolute top-[6px] left-2 w-[85px] h-12 bg-lime-400 rounded shadow-md transform transition-transform duration-300 z-10 ${
             isToggled ? "translate-x-[85px]" : ""
           }`}
         ></span>
