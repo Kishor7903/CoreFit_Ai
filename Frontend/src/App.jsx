@@ -14,10 +14,9 @@ function App() {
       <Routes>
         <Route path="/" element={<AppLayout />} >
           <Route path="/" element={<Home />} />
-          <Route path="userdetails" element={<UserDetails />} >
-            <Route path="details" element={<Details />} />
-          </Route>
+          <Route path="userdetails" element={<UserDetails />} />
           <Route path="imageRecomendation" element={<ImageRecommendation />} />
+          <Route path="details" element={<Details />} />
         </Route>
         <Route path="/auth" element={<AuthLayout />} >
           <Route path="signup" element={<Signup />} />

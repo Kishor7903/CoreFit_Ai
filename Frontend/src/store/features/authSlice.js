@@ -4,7 +4,8 @@ import axios from 'axios';
 const initialState = {
     isAuthenticated: false,
     isLoading: false,
-    userData: null
+    userData: null,
+    state: ""
 }
 
 export const registerUser = createAsyncThunk('/auth/register', async(userData) => {
@@ -29,9 +30,12 @@ const authSlice = createSlice({
     reducers: {
         updateData: (state, actions) => {
             state.userData = actions.payload;
+        },
+        setState: (state, actions) => {
+            state.state = actions.payload;
         }
     }
 })
 
-export const {updateData} = authSlice.actions;
+export const {updateData, setState} = authSlice.actions;
 export default authSlice.reducer;
