@@ -5,6 +5,7 @@ import { useState } from 'react';
 import calculateBmi from '../hooks/calculateBmiHook';
 import { useDispatch } from "react-redux"
 import { updateData } from '../store/features/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 function UserDetails() {
@@ -19,6 +20,7 @@ function UserDetails() {
 	const [bmi, setBmi] = useState(null);
 	const [description, setDescription] = useState("");
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleChange = (event) => {
 		event.preventDefault();
@@ -175,10 +177,10 @@ function UserDetails() {
 								<span className='text-[150px] font-thin text-blue-400'>{"{"}</span>
 								<p className='text-xl pt-7'>According to your BMI score,<br /> you are <br /><span className='font-bold text-4xl text-orange-400'>{description}</span></p>
 							</div>
-							<button className='bg-gradient-to-r from-blue-400 to-blue-600 rounded px-3 py-2 text-white'>Your BMI Explaination</button>
+							<button onClick={() => navigate("/userdetails/details")} className='bg-gradient-to-r from-blue-400 to-blue-600 rounded px-3 py-2 text-white'>Your BMI Explaination</button>
 							<div className="flex justify-between mt-5 gap-5">
-								<button className='bg-gradient-to-r from-pink-400 to-pink-700 rounded px-3 py-2 text-white'>Get Diet Recommendation</button>
-								<button className='bg-gradient-to-r from-yellow-400 to-orange-700 rounded px-3 py-2'>Get Exercise Recommendation</button>
+								<button onClick={() => navigate("/userdetails/details")} className='bg-gradient-to-r from-pink-400 to-pink-700 rounded px-3 py-2 text-white'>Get Diet Recommendation</button>
+								<button onClick={() => navigate("/userdetails/details")} className='bg-gradient-to-r from-yellow-400 to-orange-700 rounded px-3 py-2'>Get Exercise Recommendation</button>
 							</div>
 						</div>
 					)
