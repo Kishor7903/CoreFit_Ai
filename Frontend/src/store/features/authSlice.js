@@ -5,7 +5,8 @@ const initialState = {
     isAuthenticated: false,
     isLoading: false,
     userData: null,
-    state: ""
+    state: "",
+    userTodo: []
 }
 
 export const registerUser = createAsyncThunk('/auth/register', async(userData) => {
@@ -33,6 +34,9 @@ const authSlice = createSlice({
         },
         setState: (state, actions) => {
             state.state = actions.payload;
+        },
+        setUserTodo: (state, action) =>{
+            state.userTodo = action.payload;
         }
     }
 })

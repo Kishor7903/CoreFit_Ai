@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 
 function Header() {
     const navigate = useNavigate();
-    const { isAuthenticated } = useSelector(state => state.auth)
+    const { isAuthenticated, userTodo } = useSelector(state => state.auth)
 
   const navItems = [
     {
@@ -17,6 +17,12 @@ function Header() {
       active: true,
       slug: "/imageRecomendation",
     },
+
+    {
+      name: "Todos",
+      active: true,
+      slug: "/todo",
+    }
   ];
 
   return (

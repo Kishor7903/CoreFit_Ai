@@ -6,7 +6,6 @@ async function useDietandExerciseRecomendation(userData, Action) {
   try {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    console.log(userData, Action);
 
     let prompt = "";
     if (Action === "diet") {
@@ -63,30 +62,28 @@ async function useDietandExerciseRecomendation(userData, Action) {
 			This plan is a general guideline. Consult a doctor or registered dietitian for personalized advice `;
     } else if (Action === "exercise") {
       	prompt = `
-   			Generate a personalized fitness plan based on the following user data:
+		  	Generate a personalized fitness plan based on the following user data:
 
-			Height: ${userData.height}
-			Weight: ${userData.weight}
-			BMI: ${userData.BMI}
-
-			Output format:
-			Bmi Assesment 
-			"Asses the bmi and tell if it is in the healthy range or not"
-
-			Briefly describe the potential health risks associated with the user's current BMI category.
-
-			Exercise Section 
-			Monday: Exercise1,Exercise2,Exeercise3,Exercise4, ..
+		  	Height: ${userData.height}
+		  	Weight: ${userData.weight}
+		  	BMI: ${userData.BMI}
+		  
+		  	Output format:
+		   	Bmi Assesment 
+		   	"Asses the bmi and tell if it is in the healthy range or not"
+		  
+		   	Exercise Section %
+			Monday: Exercise1;Exercise2;Exeercise3;Exercise4 .. |
+			Tuesday: Exercise1;Exercise2;Exeercise3;Exercise4 .. |
+			and so on for all the days of the week
+		  	%
+			Note: Remember to close the Exercise section in %% and also to close each day within "|" and include after each day name ":" and don't incluede after last value
 			
-			Tuesday: Exercise1,Exercise2,Exeercise3,Exercise4 .. 
-			
-			just like that for all the days of the week
-
 			Precautions:
-
+			
 			Try to incorporate different types of exercise and yoga
-
-			Provide a short Description of different Exercise provided and how will it affect the body atlast outside the exercise section`;
+			
+			Provide a short Description of different Exercise provided and how will it affect the body atlast outside the exercise section`		  
     }
 	else{
 		prompt = `
