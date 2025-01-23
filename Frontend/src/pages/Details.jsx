@@ -47,6 +47,13 @@ function Details() {
         });
 
 		setText(newData)
+
+		setTimeout(()=> {
+			scrollBy({
+				top: -370,
+				behavior: "smooth"
+			})
+		}, 100)
 	}
 
 	useEffect(() => {
@@ -56,7 +63,17 @@ function Details() {
 	return (
 		<div className="min-h-screen w-full py-5 px-28">
 			<h2 className="text-5xl mb-12 border-b-2 pb-2 text-cyan-200 text-center fredoka font-semibold tracking-wide">{handleHeaderContent(state)}</h2>
-			<div className="bg-white rounded-xl h-full w-full border min-h-32 p-14 text-black text-lg">{text}</div>
+			{
+				text ? (
+					<div className="bg-white rounded-xl h-full w-full border min-h-32 p-14 text-black text-lg">{text}</div>
+				) : (
+					<div className="p-4 h-auto w-full mx-auto">
+						<div className="border border-gray-200 shadow rounded h-full p-4 w-full animate-pulse bg-gray-100 flex justify-center items-center text-black">
+							<p>Please Wait..</p>
+						</div>
+					</div>
+				)
+			}
 		</div>
 	)
 }

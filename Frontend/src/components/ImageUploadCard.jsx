@@ -1,9 +1,8 @@
 import { useRef, useState } from "react";
 
 
-function ImageUploadCard({title, description}) {
+function ImageUploadCard({title, description, getData, loading, imgFile ,setImgFile}) {
     const inputRef = useRef(null);
-    const [imgFile, setImgFile] = useState(null);
     const [selectedImage, setSelectedImage] = useState("");
 
     const handleImgFileChange = (e) => {
@@ -31,7 +30,7 @@ function ImageUploadCard({title, description}) {
         <div className="flex flex-col justify-between w-[450px]">
             <h2 className="text-4xl amaranth border-b-2 border-sky-400 w-[365px]">{title}</h2>
             <p>{description}</p>
-            <button className="bg-gradient-to-r from-[#77A1D3] via-[#79CBCA] to-[#77A1D3] h-10 w-10/12 font-semibold text-lg rounded tracking-wide">Submit</button>
+            <button className="bg-gradient-to-r from-[#77A1D3] via-[#79CBCA] to-[#77A1D3] h-10 w-10/12 font-semibold text-lg rounded tracking-wide" onClick={() => getData(imgFile)}>{!loading ? "Submit" : "Loading..."}</button>
         </div>
         <div className='h-full w-1/3'>
             <input id='image-upload' accept='image/*' className='hidden' type="file" ref={inputRef} onChange={handleImgFileChange} />

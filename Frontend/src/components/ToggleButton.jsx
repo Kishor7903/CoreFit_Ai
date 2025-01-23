@@ -1,9 +1,12 @@
 import React from "react";
 
-const ToggleButton = ({isToggled, setIsToggled}) => {
+const ToggleButton = ({isToggled, setIsToggled, setShowTextBox, setImgFile, setText}) => {
 
   const toggle = () => {
     setIsToggled((prev) => !prev);
+    setShowTextBox(false);
+    setImgFile(null);
+    setText(null);
   };
 
   return (
