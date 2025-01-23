@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux"
+import { registerUser } from "../store/features/authSlice";
 
 let initialformData = {
 	name: "",
@@ -9,6 +11,8 @@ let initialformData = {
 
 const Signup = () => {
 	const [formData, setFormData] = useState(initialformData);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,8 +20,12 @@ const Signup = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log("Form Data Submitted:", formData);
+
 		// Add your form submission logic here
+		dispatch(registerUser(formData)).then((res) => {
+			alert(res?.payload?.message);
+			navigate("/auth/login")
+		})
 	};
 
 	return (

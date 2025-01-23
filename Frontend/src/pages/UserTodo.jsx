@@ -40,7 +40,9 @@ function UserTodo(){
         <div className="h-auto w-5/6 mx-auto my-10">
             <h2 className="text-5xl mb-12 border-b-2 pb-2 text-cyan-200 text-center fredoka font-semibold tracking-wide">My Todos</h2>
             {
-                text.length > 0 ? text : "No Todos Available..."
+                text.length > 0 ? text : (
+                    <p className="text-4xl text-center mt-52 text-gray-300">No Todos Available Right Now...</p>
+                )
             }
         </div>
     )
