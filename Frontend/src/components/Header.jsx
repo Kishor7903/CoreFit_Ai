@@ -1,9 +1,20 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { logoutUser } from "../store/features/authSlice";
 
 function Header() {
     const navigate = useNavigate();
-    const { isAuthenticated, userTodo } = useSelector(state => state.auth)
+    const dispatch = useDispatch();
+    const { isAuthenticated } = useSelector(state => state.auth)
+
+    const handleLogout = (e )=> {
+      e.preventDefault();
+
+      dispatch(logoutUser()).then((res) => {
+        alert(res?.payload?.message);
+        navigate("/");
+      })
+    }
 
   const navItems = [
     {
@@ -49,7 +60,7 @@ function Header() {
             );
           }
         })}
-        <button className={`px-3 py-2 rounded ${!isAuthenticated ? "bg-pink-800 hover:bg-pink-700" : "bg-lime-400 text-black hover:bg-lime-500"}`} onClick={!isAuthenticated ? () => navigate("/auth/signup") : () => navigate("/")}>{!isAuthenticated ? "SignUp" : "SignOut"}</button>
+        <button className={`px-3 py-2 rounded font-semibold ${!isAuthenticated ? "bg-pink-800 hover:bg-pink-700" : "bg-lime-400 text-black hover:bg-lime-500"}`} onClick={!isAuthenticated ? () => navigate("/auth/login") : handleLogout}>{!isAuthenticated ? "Sign in" : "Sign Out"}</button>
       </ul>
 
     </div>

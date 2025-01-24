@@ -8,9 +8,20 @@ import AuthLayout from "./pages/AuthLayout"
 import Login from "./pages/Login"
 import Details from "./pages/Details"
 import UserTodo from "./pages/UserTodo"
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { checkAuth } from "./store/features/authSlice"
 
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth()).then((res) => {
+        console.log(res.payload);
+        res?.payload?.statusCode === 402 ? alert(res?.payload?.message) : null;
+    })
+}, [dispatch])
   return (
       <Routes>
         <Route path="/" element={<AppLayout />} >

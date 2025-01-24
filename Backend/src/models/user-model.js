@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 let userSchema = new mongoose.Schema({
     name: {
@@ -14,7 +15,19 @@ let userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 8,
-    }
+    },
+    height: {
+        type: String
+    },
+    weight: {
+        type: String
+    },
+    BMI: {
+        type: String
+    },
+    gender: {
+        type: String
+    },
 }, { timestamps: true });
 
 userSchema.pre("save",async function (next) {

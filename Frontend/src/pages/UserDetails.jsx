@@ -3,8 +3,8 @@ import { Parallax } from 'react-parallax'
 import Button from '../components/Button'
 import { useState } from 'react';
 import calculateBmi from '../hooks/calculateBmiHook';
-import { useDispatch } from "react-redux"
-import { setState, updateData } from '../store/features/authSlice';
+import { useDispatch, useSelector } from "react-redux"
+import { setState, updateData, updateUserData } from '../store/features/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -21,6 +21,7 @@ function UserDetails() {
 	const [description, setDescription] = useState("");
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { user } = useSelector(state => state.auth);
 
 	const handleChange = (event) => {
 		event.preventDefault();
@@ -104,12 +105,18 @@ function UserDetails() {
 		setBmi(Data[0]);
 		setDescription(Data[2])
 		setLoading(false);
-		dispatch(updateData({
+
+		let userData = {
 			height: ht,
-			weight: wt,
-			BMI: Data[0],
-			Gender: gender
-		}))
+            weight: wt,
+            BMI: Data[0],
+            Gender: gender
+		}
+
+		dispatch(!user ? 
+			updateData(userData):
+			updateUserData({userData, user})
+		)
 	}
 
 	const handleDetails = (e) => {

@@ -22,6 +22,7 @@ const Login = () => {
 
     // Add your form submission logic here
     dispatch(loginUser(formData)).then((res) => {
+      console.log(res?.payload);
       alert(res?.payload?.message);
       if(res?.payload?.success){
         navigate("/")

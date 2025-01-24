@@ -23,8 +23,11 @@ const Signup = () => {
 
 		// Add your form submission logic here
 		dispatch(registerUser(formData)).then((res) => {
+			console.log(res?.payload);
 			alert(res?.payload?.message);
-			navigate("/auth/login")
+			if(res?.payload?.success){
+				navigate("/auth/login")
+			}
 		})
 	};
 
