@@ -19,35 +19,44 @@ function UserDetails() {
 	const [loading, setLoading] = useState(false);
 	const [bmi, setBmi] = useState(null);
 	const [description, setDescription] = useState("");
+	const [isBP, setBp] = useState("No");
+	const [isSugar, setSugar] = useState("No");
+	const [isON, setIsON] = useState(false);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { user } = useSelector(state => state.auth);
 
+
+
 	const handleChange = (event) => {
 		event.preventDefault();
-		if(event.target.name === "gender"){
+		if (event.target.name === "gender") {
 			setgender(event.target.value);
 		}
-		else if(event.target.name === "height"){
-            setHeightMeasurementType(event.target.value);
+		else if (event.target.name === "height") {
+			setHeightMeasurementType(event.target.value);
 			setHeightInCms("");
-			setHeightInFeet("");
+			setHeightInFeet((user? "user.height":""));
 			setHeightInInch("");
-        }
-		else if(event.target.name === "weight"){
+		}
+		else if (event.target.name === "weight") {
 			setWeightMeasurementType(event.target.value)
 			setWeight("");
+		} else if (event.target.name === "bp") {
+			setBp(event.target.value);
+		} else if (event.target.name === "sugar") {
+			setSugar(event.target.value);
 		}
 	};
 
 	const handleHeightChange = (e) => {
 		e.preventDefault();
-		if(heightMeasurementType === "Feet"){
-			e.target.name === "feet" ? setHeightInFeet(e.target.value) : setHeightInInch(e.target.value)  
-        }
-		else if(heightMeasurementType === "CMS"){
-            setHeightInCms(e.target.value)
-        }
+		if (heightMeasurementType === "Feet") {
+			e.target.name === "feet" ? setHeightInFeet(e.target.value) : setHeightInInch(e.target.value)
+		}
+		else if (heightMeasurementType === "CMS") {
+			setHeightInCms(e.target.value)
+		}
 	}
 
 	const handleWeightChange = (e) => {
@@ -60,25 +69,25 @@ function UserDetails() {
 
 		setLoading(true);
 		setBmi(null)
-		
+
 		let ht = null;
 		let wt = null;
 
-		if(!gender){
-            alert("Select Gender!!!")
+		if (!gender) {
+			alert("Select Gender!!!")
 			setLoading(false)
 			return
-        }
+		}
 
-		if(heightMeasurementType === "Feet"){
-			if(!heightInFeet || !heightInInch){
+		if (heightMeasurementType === "Feet") {
+			if (!heightInFeet || !heightInInch) {
 				alert("Enter Height Feild!!!")
 				setLoading(false)
 				return
 			}
 			ht = heightInFeet + "." + heightInInch + " foot";
-		} else{
-			if(!heightInCms){
+		} else {
+			if (!heightInCms) {
 				alert("Enter Height Feild!!!")
 				setLoading(false)
 				return
@@ -86,21 +95,21 @@ function UserDetails() {
 			ht = heightInCms + " cm"
 		}
 
-		if(!weight){
+		if (!weight) {
 			alert("Enter Weight Feild!!!")
 		}
 
-		if(weightMeasurementType === "KG"){
+		if (weightMeasurementType === "KG") {
 			wt = weight + " kg";
-		}else {
+		} else {
 			wt = weight + " lb";
 		}
 
-		let data = await calculateBmi({ht, wt, gender})
+		let data = await calculateBmi({ ht, wt, gender })
 		let Data = data.split("\n");
 		scrollBy({
 			top: 300,
-            behavior: "smooth"
+			behavior: "smooth"
 		})
 		setBmi(Data[0]);
 		setDescription(Data[2])
@@ -108,22 +117,24 @@ function UserDetails() {
 
 		let userData = {
 			height: ht,
-            weight: wt,
-            BMI: Data[0],
-            Gender: gender
+			weight: wt,
+			BMI: Data[0],
+			Gender: gender,
+			Hypertension: isBP,
+			Sugar: isSugar
 		}
 
-		dispatch(!user ? 
-			updateData(userData):
-			updateUserData({userData, user})
+		dispatch(!user ?
+			updateData(userData) :	updateUserData({ userData, user })
 		)
+		
 	}
 
 	const handleDetails = (e) => {
 		e.preventDefault();
 
 		dispatch(setState(e.target.id))
-        navigate("/details")
+		navigate("/details")
 	}
 
 	return (
@@ -150,18 +161,52 @@ function UserDetails() {
 						<Button id="gender" name="Other" icon="fi fi-rs-transgender" handleChange={handleChange} info={gender} className="px-4 py-2 text-xl font-medium" />
 
 					</div>
+
+				<div className='flex space-x-5'>
+					<div className='relative flex items-center space-x-4'>
+						<label htmlFor="hypertension" className="text-white text-lg font-bold">Hypertension</label>
+
+						<div className="w-14 h-8 flex items-center bg-gray-400 rounded-full p-1 cursor-pointer"
+							onClick={() => {
+								setBp((prev) => prev === "No" ? "Yes" : "No");
+								
+							}}
+						>
+							<div className={`w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${isBP === "Yes" ? "translate-x-6 bg-red-600" : "translate-x-0 bg-green-800"}`}></div>
+						</div>
+
+					</div>
+
+					<div className='relative flex items-center space-x-4'>
+						<label htmlFor="hypertension" className="text-white text-lg font-bold">Diabetes</label>
+
+						<div className="w-14 h-8 flex items-center bg-gray-400 rounded-full p-1 cursor-pointer"
+							onClick={() => {
+								setSugar((prev) => prev === "No" ? "Yes" : "No");
+								
+							}}
+						>
+							<div className={` w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out ${isSugar === "Yes" ? "translate-x-6 bg-red-600" : "translate-x-0 bg-green-800"}`}></div>
+						</div>
+
+					</div>
+					
+				</div>
+
+
+
 					<div className='flex justify-between bg-[rgba(96,99,255,0.23)] rounded-lg p-3'>
 						<h2 className='text-2xl'>Height</h2>
 						<div className="flex items-end space-x-8 text-slate-300 ">
 							{
 								heightMeasurementType === "Feet" ?
-								<div className='space-x-4'>
-									<input type="number" name="feet" className='bg-transparent border-b border-white w-10 h-9 focus:outline-none text-center text-2xl' value={heightInFeet} onChange={handleHeightChange}  />
-									<span className='relative right-5 bottom-2 text-xl'>"</span>
-									<input type="number" name="inch" className='bg-transparent border-b border-white w-10 h-9 focus:outline-none text-center text-2xl' value={heightInInch} onChange={handleHeightChange} />
-									<span className='relative right-5 bottom-2 text-xl'>'</span>
-								</div> :
-								<input type="text" className='bg-transparent border-b border-white w-12 h-9 focus:outline-none text-center text-2xl' value={heightInCms} onChange={handleHeightChange} />
+									<div className='space-x-4'>
+										<input type="number" name="feet" className='bg-transparent border-b border-white w-10 h-9 focus:outline-none text-center text-2xl' value={heightInFeet} onChange={handleHeightChange} />
+										<span className='relative right-5 bottom-2 text-xl'>"</span>
+										<input type="number" name="inch" className='bg-transparent border-b border-white w-10 h-9 focus:outline-none text-center text-2xl' value={heightInInch} onChange={handleHeightChange} />
+										<span className='relative right-5 bottom-2 text-xl'>'</span>
+									</div> :
+									<input type="text" className='bg-transparent border-b border-white w-12 h-9 focus:outline-none text-center text-2xl' value={heightInCms} onChange={handleHeightChange} />
 							}
 							<div className=" space-x-3">
 								<Button id="height" name="Feet" handleChange={handleChange} info={heightMeasurementType} className="px-2 py-1 text-sm" />
@@ -181,7 +226,7 @@ function UserDetails() {
 							</div>
 						</div>
 					</div>
-					<button onClick={handleSubmit} type='submit' className='h-10 w-60 font-semibold bg-gradient-to-r from-violet-600 to-violet-300 self-center rounded'>{loading ? "Loading...": "Calculate BMI"}</button>
+					<button onClick={handleSubmit} type='submit' className='h-10 w-60 font-semibold bg-gradient-to-r from-violet-600 to-violet-300 self-center rounded'>{loading ? "Loading..." : "Calculate BMI"}</button>
 				</div>
 				{
 					bmi && (

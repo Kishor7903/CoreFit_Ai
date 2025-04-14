@@ -1,7 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 async function useImageRecomendation(userData, file, action) {
-
+  console.log(userData);
+  
   const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -35,7 +36,7 @@ async function useImageRecomendation(userData, file, action) {
     const baseTo64Image = await fileToBase64(file);
 
     const prompt = action === "menu" ? 
-    `Analyze the image of the food menu and provide me the food which would be suitable for a person who has a bmi of ${userData ? userData.BMI : "22"} and suitable for a person with Hypertension = ${userData ? "yes": "no"}, Sugar = ${userData ? "yes": "no"} ` : `Analyze the image of the food and provide me the overall recipe with the ingredients which is used to make it.
+    `Analyze the image of the food menu and provide me the food which would be suitable for a person who has a bmi of ${userData ? userData.BMI : "22"} and suitable for a person with Hypertension = ${userData ? userData.Hypertension: "no"}, Sugar = ${userData?userData.Sugar:"no" } ` : `Analyze the image of the food and provide me the overall recipe with the ingredients which is used to make it.
     And also provide the amount of protein, carbohydrates, vitamine and other information with their respective quantity`
     const image = {
       inlineData: {

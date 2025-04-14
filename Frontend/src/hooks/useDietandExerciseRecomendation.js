@@ -15,6 +15,8 @@ async function useDietandExerciseRecomendation(userData, Action) {
 			Height: ${userData.height}
 			Weight: ${userData.weight}
 			BMI: ${userData.BMI}
+			Hypertension: ${userData.Hypertension}
+			Sugar: ${userData.Sugar}
 			Output Format/Example:
 
 			BMI Assessment:

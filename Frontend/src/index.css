@@ -43,4 +43,37 @@ body{
     margin: 0;
   }
 }
+
+.typewriter{
+  width: fit-content; /* Adjust width to fit content */
+  white-space: nowrap; /* Prevent line breaks */
+}
   
+.typewriter h2{
+  display: inline-block; /* Make the h2 inline-block to respect width */
+  width: 0;
+  border-right: 2px solid orange;
+  overflow: hidden;
+  animation: typeErase 10s steps(30) infinite, blink 0.75s step-end infinite;
+}
+
+@keyframes typeErase{
+  0%{
+    width: 0;
+  }
+  40%{
+    width: 100%;
+  }
+  60%{
+    width: 100%;
+  }
+  100%{
+    width: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
