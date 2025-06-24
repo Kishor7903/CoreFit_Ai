@@ -33,6 +33,12 @@ function Header() {
       name: "Todos",
       active: true,
       slug: "/todo",
+    },
+
+    {
+      name: "Medical Image Analysis",
+      active: true,
+      slug: "/medicalAnalysis",
     }
   ];
 

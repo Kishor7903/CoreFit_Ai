@@ -11,6 +11,7 @@ import UserTodo from "./pages/UserTodo"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { checkAuth } from "./store/features/authSlice"
+import MedicalAnalysis from "./pages/MedicalAnalysis"
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="imageRecomendation" element={<ImageRecommendation />} />
           <Route path="details" element={<Details />} />
           <Route path="todo" element={<UserTodo />} />
+          <Route path ="medicalAnalysis" element = {<MedicalAnalysis />} />
         </Route>
         <Route path="/auth" element={<AuthLayout />} >
           <Route path="signup" element={<Signup />} />

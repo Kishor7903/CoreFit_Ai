@@ -53,6 +53,7 @@ const Signup = () => {
 							value={formData.name}
 							onChange={handleChange}
 							className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm"
+							autoComplete="off"
 							required
 						/>
 					</div>
@@ -70,6 +71,7 @@ const Signup = () => {
 							placeholder="Enter your email"
 							value={formData.email}
 							onChange={handleChange}
+							autoComplete="off"
 							className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm"
 							required
 						/>
@@ -88,6 +90,7 @@ const Signup = () => {
 							placeholder="Enter your password"
 							value={formData.password}
 							onChange={handleChange}
+							autoComplete="off"
 							className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm"
 							required
 						/>
